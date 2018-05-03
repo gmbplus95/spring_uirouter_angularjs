@@ -1,0 +1,33 @@
+<div class="container">
+        <a class="btn btn-link" href="/add_student">Thêm Sinh Viên</a>
+        <br>
+        <a class="btn btn-link" href="/viewCourse">Danh Sách Môn Học</a>
+        <h2 class="text-center"> Danh Sach Tat Ca Cac Sinh Vien Cua Truong</h2>
+        <form class="form-inline">
+            <div class="form-group">
+                <label>Search</label>
+                <input type="text" name="" ng-model="search" class="form-control" placeholder="Search">
+            </div>
+        </form>
+        <br>
+        <table class="table" class="table-hover">
+            <tr>
+                <th>ID</th>
+                <th>Student Name</th>
+                <th>Student Age</th>
+                <th>Student Location</th>
+                <th>Action</th>
+            </tr>
+            <tr ng-repeat="student in students | filter: search">
+                <td>{{student.studentid}}</td>
+                <td>{{student.studentName}}</td>
+                <td>{{student.studentAge}}</td>
+                <td>{{student.studentLocation}}</td>
+                <td>
+                    <a class="btn btn-info" ui-sref="studentDetail({studentid:student.studentid})">View</a>
+                    <a class="btn btn-danger" href="" ng-click="deleteStudent(student.studentid)">Delete</a>
+                    <a class="btn btn-primary" href="/edit_student" ng-click="viewStudent(student.studentid)">Edit</a>
+                </td>
+            </tr>
+        </table>
+    </div>
