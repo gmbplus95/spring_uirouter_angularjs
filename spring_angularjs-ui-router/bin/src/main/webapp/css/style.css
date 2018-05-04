@@ -1,0 +1,12 @@
+*{
+	margin: 0px;
+	padding: 0px;
+}
+
+.comma:empty {
+          			display: none;
+            }
+
+            .comma:not(:first-child):before {
+            content: ", ";
+            }

@@ -1,0 +1,26 @@
+<h2>Chi Tiết Sinh Viên</h2>
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Student Name</th>
+        <th>Student Age</th>
+        <th>Student Location</th>
+    </tr>
+    <tr>
+        <td>{{students1.studentid}}</td>
+        <td>{{students1.studentName}}</td>
+        <td>{{students1.studentAge}}</td>
+        <td>{{students1.studentLocation}}</td>
+    </tr>
+</table>
+<h4>Sinh viên {{students1.studentName}} đã đăng kí các khóa học sau: <span class= "comma" ng-repeat="stcourse in students2" > {{stcourse.coursename}} <a  class="btn btn-danger" href="" ng-click="deleteStudentCourse(students1.studentid,stcourse.courseid)"> Xóa </a></span></h4>
+<p>Add Course</p>
+<form ng-submit="addCourseForStudent(stcourse2)">
+    <input type="hidden" name="id" ng-model="id">
+    <div class="col-xs-3">
+        <select class="form-control" name="id2" ng-model="id2">
+            <option ng-repeat="course in courses" ng-selected="courseid =course.courseid" ng-value="course.courseid">{{course.coursename}}</option>
+        </select>
+    </div>
+    <input class="btn btn-primary" type="submit" value="Add Course">
+</form>

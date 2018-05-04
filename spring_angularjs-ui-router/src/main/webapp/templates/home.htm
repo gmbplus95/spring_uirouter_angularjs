@@ -1,0 +1,16 @@
+<h1><strong> Made by Bac Nguyen </strong></h1>
+<span id="clockbox"></span>
+<script>
+	
+	document.getElementById("clockbox").innerHTML = formatAMPM();
+
+function formatAMPM() {
+var d = new Date(),
+    minutes = d.getMinutes().toString().length == 1 ? '0'+d.getMinutes() : d.getMinutes(),
+    hours = d.getHours().toString().length == 1 ? '0'+d.getHours() : d.getHours(),
+    ampm = d.getHours() >= 12 ? 'pm' : 'am',
+    months = ['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'],
+    days = ['Chủ Nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ 5','Thứ 6','Thứ 7'];
+return days[d.getDay()]+' '+'Ngày '+ d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear()+' '+hours+':'+minutes+ampm;
+}
+</script>

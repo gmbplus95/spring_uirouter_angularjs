@@ -4,7 +4,7 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state("home", {
             url: "/home",
-            templateUrl: "templates/home.html"
+            templateUrl: "templates/home.htm"
         })
         .state("student", {
             url: "/student",
@@ -14,7 +14,8 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
         })
         .state("course", {
             url: "/course",
-            templateUrl: "templates/course.htm"
+            templateUrl: "templates/course.htm",
+            controller: "courseCtrl"
         })
         .state("studentDetail",{
         	url:"/student/:studentid",
@@ -25,6 +26,26 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
         	url:"/student/:studentid",
         	templateUrl: "templates/editStudent.htm",
         	controller: "studentEditCtrl"
+        })
+         .state("addStudent",{
+            url:"/addStudent",
+            templateUrl: "templates/addStudent.htm",
+            controller: "studentAddCtrl"
+        })
+         .state("courseDetail",{
+            url:"/course/:courseid",
+            templateUrl: "templates/viewCourse.htm",
+            controller: "courseDetailCtrl"
+        })
+         .state("addCourse",{
+            url:"/addCourse",
+            templateUrl: "templates/addCourse.htm",
+            controller: "courseAddCtrl"
+        })
+         .state("courseEdit",{
+            url:"/course/:courseid",
+            templateUrl: "templates/editCourse.htm",
+            controller: "courseEditCtrl"
         })
         
         
@@ -50,7 +71,7 @@ myApp.controller('studentCtrl', function($scope, $http,$interval,$window,$stateP
 		    });
     };
     $scope.reload();
-    $interval($scope.reload, 5000);
+    $interval($scope.reload, 10000);
 
   
     $scope.deleteStudent = function(id) {
@@ -75,6 +96,7 @@ myApp.controller('studentCtrl', function($scope, $http,$interval,$window,$stateP
 });
   
 
+//student detail controller
   myApp.controller('studentDetailCtrl', function($scope, $http,$interval,$window,$stateParams) {
 	  
 	  $scope.reload = function () {
@@ -115,7 +137,7 @@ myApp.controller('studentCtrl', function($scope, $http,$interval,$window,$stateP
 	   				 		});
 	    };
 	    $scope.reload();
-	    $interval($scope.reload, 5000);
+	    $interval($scope.reload, 10000);
                     
 	        //delete student's course
                      
@@ -166,12 +188,26 @@ myApp.controller('studentCtrl', function($scope, $http,$interval,$window,$stateP
 
 
 });
-  
-   myApp.controller('studentDetailCtrl', function($scope, $http,$interval,$window,$stateParams) {
-   	
+  //edit student controller
+   myApp.controller('studentEditCtrl', function($scope, $http,$interval,$window,$stateParams) {
+
+    //get editted student detail
+    $http({
+                        method : 'GET',
+                        url : 'http://localhost:8082/viewStudent/',
+                        params: {studentid: $stateParams.studentid}
+
+                    }).then(function(response) {
+                        $scope.students1=response.data
+                            },function(errResponse){
+                            console.error('Error while fetching Users');
+                            deferred.reject(errResponse);
+                            $scope.error='error getting'
+                        });
+    //edit 
   $scope.editStudent2= function(student){
       var student={
-   		 studentid: $scope.students1.studentid, 
+   		 studentid: $stateParams.studentid, 
    		 studentName: $scope.studentName,
    		 studentAge: $scope.studentAge,
    		 studentLocation: $scope.studentLocation
@@ -181,9 +217,7 @@ myApp.controller('studentCtrl', function($scope, $http,$interval,$window,$stateP
             url : 'http://localhost:8082/edit_student/',
             data: student
         }).then(function(response) {
-                $window.location.href='http://localhost:8082';
-                console.log("thanh cong roi")
-
+                $window.location.href='http://localhost:8082/#!/student';
                 },function(errresponse){
                 
                 $scope.error='error getting';
@@ -194,3 +228,169 @@ myApp.controller('studentCtrl', function($scope, $http,$interval,$window,$stateP
 });
 
 
+//add student controller
+myApp.controller('studentAddCtrl', function($scope, $http,$interval,$window,$stateParams) {
+
+    $scope.addStudent= function(student){
+                     var student={
+                                studentid: $scope.studentid,
+                                studentName:$scope.studentName,
+                                studentAge:$scope.studentAge,
+                                 studentLocation:$scope.studentLocation
+                             };
+             
+                     $http({
+                         method : 'POST',
+                         url : 'http://localhost:8082/add_student/',
+                         data: student
+                     }).then(function(response) {
+                             $window.location.href='http://localhost:8082/#!/student';
+                             },function(errresponse){
+                             deferred.reject(errResponse);
+                             $scope.error='error getting';
+                                alert("failse")
+                         });
+                 };
+
+});
+
+
+myApp.controller('courseCtrl', function($scope, $http,$interval,$window,$stateParams) {
+     $scope.reload = function () {
+          $http.get("http://localhost:8082/getAllCourse") //get all course
+            .then(function(response) {
+                $scope.courses= response.data; 
+
+            },
+            function(errResponse){
+                    console.error('Error while fetching Users');
+                    deferred.reject(errResponse);
+                    $scope.error='error getting'
+            });
+        };
+    $scope.reload();
+    $interval($scope.reload, 10000);
+        $scope.init = function(id){
+           $scope.leader = {};
+                $http.get('http://localhost:8082/numberofStudent/'+id)
+                .then(function (response) {
+                    $scope.leader[id] = response.data;// gan gia tri cung voi id cua no
+                })
+                ,function(errResponse){
+                    console.error('Error while fetching Users');
+                    deferred.reject(errResponse);
+                    $scope.error='error getting'
+                }
+            };
+     //delete by id
+    $scope.deleteCourse = function(id) {
+                    $http({
+                        method : 'GET',
+                        url : 'http://localhost:8082/deleteCourse/'+id,
+                    }).then(function(response) {
+                        $scope.reload();
+                            },function(errResponse){
+                            console.error('Error while fetching Users');
+                            deferred.reject(errResponse);
+                            $scope.error='error getting'
+                        });
+                    };
+
+
+});
+
+myApp.controller('courseDetailCtrl', function($scope, $http,$interval,$window,$stateParams) {
+     $scope.reload = function () {
+                    $http({
+                        method : 'GET',
+                        url : 'http://localhost:8082/viewCourse',
+                        params: {courseid: $stateParams.courseid}
+                    }).then(function(response) {
+                        $scope.courses1=response.data;  
+                            },function(errResponse){
+                            console.error('Error while fetching Users');
+                            deferred.reject(errResponse);
+                            $scope.error='error getting'
+                        });
+                 
+                $http({
+                        method : 'GET',
+                        url : 'http://localhost:8082/courseDetail',
+                        params: {courseid: $stateParams.courseid}
+                    }).then(function(response) {
+                        $scope.courses2=response.data;   
+                            },function(errResponse){
+                            console.error('Error while fetching Users');
+                            deferred.reject(errResponse);
+                            $scope.error='error getting'
+                        });
+
+        };
+    $scope.reload();
+    $interval($scope.reload, 10000);
+
+});
+
+
+myApp.controller('courseAddCtrl', function($scope, $http,$interval,$window,$stateParams) {
+
+    //add course
+    $scope.addCourse= function(course){
+                     var course={
+                                courseid: $scope.studentid,
+                                coursename:$scope.coursename
+                             };
+             
+                     $http({
+                         method : 'POST',
+                         url : 'http://localhost:8082/add_course/',
+                         data: course
+                             }).then(function(response) {
+                             $window.location.href='http://localhost:8082/#!/course';
+                             },function(errresponse){
+                             deferred.reject(errResponse);
+                             $scope.error='error getting';
+                                alert("failse")
+                         });
+                 };
+
+
+});
+
+
+//edit course controller
+   myApp.controller('courseEditCtrl', function($scope, $http,$interval,$window,$stateParams) {
+
+    //get editted course detail
+    $http({
+                        method : 'GET',
+                        url : 'http://localhost:8082/viewCourse',
+                        params: {courseid: $stateParams.courseid}
+                    }).then(function(response) {
+                        $scope.courses1=response.data;  
+                            },function(errResponse){
+                            console.error('Error while fetching Users');
+                            deferred.reject(errResponse);
+                            $scope.error='error getting'
+                        });
+    //edit 
+  $scope.editCourse= function(course){
+                   var course={
+                         courseid: $stateParams.courseid, 
+                         coursename: $scope.coursename
+                     };
+                     $http({
+                         method : 'PUT',
+                         url : 'http://localhost:8082/edit_course/',
+                         data: course
+                     }).then(function(response) {
+                             $window.location.href='http://localhost:8082/#!/course';
+                             },function(errresponse){
+                             
+                             $scope.error='error getting';
+                                alert("fail")
+                         });
+                 };
+
+
+});

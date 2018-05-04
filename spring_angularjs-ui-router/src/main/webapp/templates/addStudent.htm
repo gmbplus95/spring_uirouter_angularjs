@@ -1,0 +1,25 @@
+<div class="container">
+    <h1>Add Student</h1>
+    <form name="myForm" ng-submit="addStudent(stModel)">
+        <input type="hidden" name="studentid"  ng-model="studentid" >
+        <br>
+          Student name:
+        <br>
+        <input class="col-xs-3" type="text" name="studentName"  ng-model="studentName" required>
+        <span style="color:red;margin-left:3px;" ng-show="myForm.studentName.$touched && myForm.studentName.$invalid">  The name is required.</span>
+        <br> 
+        <br>
+        Student age:
+        <br>
+        <input class="col-xs-3" type="text" name="studentAge"  ng-model="studentAge" required>
+         <span style="color:red;margin-left:3px;" ng-show="myForm.studentAge.$touched && myForm.studentAge.$invalid">  The age is required.</span>
+        <br> 
+        <br>
+        Student location:
+        <br>
+        <input class="col-xs-3" type="text"  name="studentLocation"  ng-model="studentLocation" required>
+         <span style="color:red;margin-left:3px;" ng-show="myForm.studentLocation.$touched && myForm.studentLocation.$invalid">  The location is required.</span>
+        <br>
+        <br>
+        <input class="btn btn-success" type="submit" value="Create">
+    </form>

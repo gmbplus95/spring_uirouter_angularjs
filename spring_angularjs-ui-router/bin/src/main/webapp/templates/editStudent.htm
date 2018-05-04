@@ -1,0 +1,22 @@
+<div class="container">
+    <h3>Edit Student</h3>
+    <form name="myForm2" ng-submit="editStudent2(stModel)" >
+        <br> <div class="col-5">Student id: </div>
+        <input class="col-5" type="text" name="studentid" ng-model="studentid"  ng-value="students1.studentid" readonly="readonly" > 
+        <br>
+        <div class="col-3">Student name:</div>
+        <input  class="col-5" type="text" name="studentName" ng-model="studentName" placeholder="{{students1.studentName}}" required >
+    
+        <br>
+        <div class="col-3">Student age:</div>
+        <input type="text" name="studentAge" ng-model="studentAge" placeholder="{{students1.studentAge}}" required>
+     
+        <br>
+        <div class="col-3"> Student location:</div>
+        <input class="col-5" type="text" name="studentLocation" ng-model="studentLocation" placeholder="{{students1.studentLocation}}"  required>
+     
+        <br>
+        <br>
+        <input class="btn btn-primary" type="submit" value="Submit" >
+    </form>
+    </div>

@@ -1,0 +1,14 @@
+<div class="container">
+    <h1>Add Course</h1>
+    <form name="myForm" ng-submit="addCourse(course)">
+        <input type="hidden" name="courseid"  ng-model="courseid" >
+        <br>
+          Course name:
+        <br>
+        <input type="text" name="coursename"  ng-model="coursename" required>
+        <span style="color:red;margin-left:3px;" ng-show="myForm.coursename.$touched && myForm.coursename.$invalid">  The name is required.</span>
+        <br> 
+        <br>
+        <input class="btn btn-success" type="submit" value="Create">
+    </form>
+    </div>

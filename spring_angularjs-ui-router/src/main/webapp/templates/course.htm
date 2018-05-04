@@ -1,10 +1,31 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	Course's Page
-</body>
-</html>
+<div class="container">
+	<p><a ui-sref="addCourse" >Thêm Khóa Học</a></p>
+    <h2 class="text-center"> Danh Sach Tat Ca Cac Khoa Hoc</h2>
+    <form class="form-inline">
+            <div class="form-group">
+                <label>Search</label>
+                <input type="text" name="" ng-model="search" class="form-control" placeholder="Search">
+            </div>
+        </form>
+        <br>
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Course Name</th>
+            <th>Number of Student</th>
+            <th>Action</th>
+        </tr>
+        <tr ng-repeat="course in courses | filter: search">
+            <td>{{course.courseid}}</td>
+            <td>{{course.coursename}}</td>
+            <td  ng-init="init(course.courseid)" >{{leader[course.courseid]}}</td>
+            <td>
+                <a class="btn btn-info" ui-sref="courseDetail({courseid:course.courseid})">Detail</a>
+                <a class="btn btn-warning" href="" ng-click="deleteCourse(course.courseid)">Delete</a>
+                <a class="btn btn-primary" ui-sref="courseEdit({courseid:course.courseid})" >Edit</a>
+            </td>
+        </tr>
+    </table>
+    
+
+</div>

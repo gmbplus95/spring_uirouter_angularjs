@@ -78,8 +78,8 @@ public class MainRestController {
 			courseRepo.save(coursemodel);		
 		}
 		
-		@RequestMapping(value = "/viewCourse/{courseid}")
-		public CourseModel retrieveCourseById(@PathVariable("courseid") int courseid) {
+		@RequestMapping(value = "/viewCourse")
+		public CourseModel retrieveCourseById(@RequestParam("courseid") int courseid) {
 			return	courseRepo.findById(courseid).orElse(null);
 		}
 		
@@ -102,8 +102,8 @@ public class MainRestController {
 			courseRepo.save(course);
 		}
 		
-		@RequestMapping(value = "/courseDetail/{courseid}")
-		public Set<StModel> viewStudentByCourseId(@PathVariable("courseid") int courseid) {
+		@RequestMapping(value = "/courseDetail")
+		public Set<StModel> viewStudentByCourseId(@RequestParam("courseid") int courseid) {
 			CourseModel course=courseRepo.findById(courseid).orElse(null);
 			return course.getStModels();
 		}

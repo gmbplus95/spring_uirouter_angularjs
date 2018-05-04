@@ -1,0 +1,14 @@
+<div class="container">
+    <h3>Edit Student</h3>
+    <form name="myForm2" ng-submit="editCourse(course)">
+        <br>
+        <div class="col-5">Course id: </div>
+        <input class="col-5" type="text" name="courseid" ng-model="courseid" ng-value="courses1.courseid" readonly="readonly">
+        <br>
+        <div class="col-3">Course name:</div>
+        <input class="col-5" type="text" name="coursename" ng-model="coursename" placeholder="{{courses1.coursename}}" required>
+        <br>
+        <br>
+        <input class="btn btn-primary" type="submit" value="Submit">
+    </form>
+</div>
